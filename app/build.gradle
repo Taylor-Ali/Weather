@@ -1,0 +1,117 @@
+plugins {
+    id 'kotlin-kapt'
+    id 'com.android.application'
+    id 'org.jetbrains.kotlin.android'
+    id 'com.google.dagger.hilt.android'
+    id 'androidx.navigation.safeargs'
+    id 'com.google.android.libraries.mapsplatform.secrets-gradle-plugin'
+
+}
+
+
+android {
+    namespace 'com.leaf.weather'
+    compileSdk 34
+
+    defaultConfig {
+        applicationId "com.leaf.weather"
+        minSdk versions.sdk.min
+        targetSdk versions.sdk.target
+        versionCode versions.versionCode()
+        versionName versions.versionName()
+
+        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+    }
+
+    buildFeatures {
+        buildConfig = true
+        dataBinding true
+    }
+
+    secrets {
+        propertiesFileName = "secrets.properties"
+
+        defaultPropertiesFileName = "local.defaults.properties"
+
+        ignoreList.add("keyToIgnore")
+        ignoreList.add("sdk.*")
+    }
+
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+
+        }
+        debug{
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+        }
+
+        applicationVariants.all{
+            variant ->
+                variant.outputs.each{
+                    output->
+                        def name = "Weather-${variant.name}-${versions.versionName()}.apk"
+                        output.outputFileName = name
+                }
+        }
+    }
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
+    kotlinOptions {
+        jvmTarget = '1.8'
+    }
+}
+
+dependencies {
+    implementation project(path: ':domain')
+    implementation project(path: ':utils')
+    
+    implementation "org.jetbrains.kotlin:kotlin-stdlib:${versions.tools.kotlin}"
+    implementation "androidx.core:core-ktx:${versions.libraries.coreKtx}"
+
+    //Support
+    implementation "androidx.appcompat:appcompat:${versions.libraries.appCompat}"
+
+    //Design
+    implementation "com.google.android.material:material:${versions.libraries.material}"
+    implementation "androidx.constraintlayout:constraintlayout:${versions.libraries.constraintLayout}"
+    implementation "androidx.recyclerview:recyclerview:${versions.libraries.recyclerview}"
+    implementation "androidx.activity:activity-ktx:${versions.libraries.activity}"
+    implementation "androidx.fragment:fragment-ktx:${versions.libraries.fragment}"
+
+    //Navigation
+    implementation "androidx.navigation:navigation-fragment-ktx:${versions.libraries.navigation}"
+    implementation "androidx.navigation:navigation-ui-ktx:${versions.libraries.navigation}"
+    implementation "androidx.navigation:navigation-dynamic-features-fragment:${versions.libraries.navigation}"
+
+    //Lifecycle
+    implementation "androidx.lifecycle:lifecycle-viewmodel-ktx:${versions.libraries.lifecycle}"
+    implementation "androidx.lifecycle:lifecycle-livedata-ktx:${versions.libraries.lifecycle}"
+    implementation "androidx.lifecycle:lifecycle-runtime-ktx:${versions.libraries.lifecycle}"
+    implementation 'androidx.lifecycle:lifecycle-extensions:2.2.0'
+
+    //Dagger Hilt
+    implementation 'com.google.dagger:hilt-android:2.49'
+    implementation 'androidx.legacy:legacy-support-v4:1.0.0'
+    kapt 'com.google.dagger:hilt-compiler:2.49'
+
+    //Coil
+    implementation "io.coil-kt:coil:2.5.0"
+
+    //Places
+    implementation 'com.google.android.libraries.places:places:3.3.0'
+
+    //Logging
+    implementation "com.jakewharton.timber:timber:${versions.libraries.timber}"
+
+    //Testing
+    testImplementation "junit:junit:${versions.libraries.junit}"
+    testImplementation "org.mockito:mockito-inline:${versions.libraries.mockito}"
+    testImplementation "org.jetbrains.kotlinx:kotlinx-coroutines-test:${versions.libraries.coroutines}"
+    androidTestImplementation "androidx.test.ext:junit:${versions.libraries.extJunit}"
+    androidTestImplementation "androidx.test.espresso:espresso-core:${versions.libraries.espresso}"
+}

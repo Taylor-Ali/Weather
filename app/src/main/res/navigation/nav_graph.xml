@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/main_navigation"
+    app:startDestination="@id/weatherForecast">
+
+    <fragment
+        android:id="@+id/weatherForecast"
+        android:name="com.leaf.weather.ui.forecast.WeatherForecastFragment"
+        android:label=""
+        tools:layout="@layout/fragment_weather_forecast" >
+        <action
+            android:id="@+id/action_weatherForecast_to_citiesFragment"
+            app:destination="@id/citiesFragment" />
+        <argument
+            android:name="City"
+            app:nullable="true"
+            android:defaultValue="@null"
+            app:argType="com.leaf.weather.ui.cities.City" />
+    </fragment>
+    <fragment
+        android:id="@+id/citiesFragment"
+        android:name="com.leaf.weather.ui.cities.CitiesFragment"
+        android:label="Manage Cities" >
+        <action
+            android:id="@+id/action_citiesFragment_to_weatherForecast"
+            app:destination="@id/weatherForecast" />
+
+    </fragment>
+</navigation>

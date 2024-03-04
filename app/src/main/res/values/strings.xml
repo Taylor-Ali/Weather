@@ -1,0 +1,14 @@
+<resources>
+    <string name="app_name">Weather</string>
+    <string name="enter_a_city_name">Enter a city name</string>
+    <string name="temp_max">Max</string>
+    <string name="current_text">Current</string>
+    <string name="min_temp">Min</string>
+    <string name="degree_symbol"> \u2103</string>
+    <string name="message_loading">Loading</string>
+    <string name="message_error">We unable to complete your request.Please try again later.</string>
+    <string name="permission_location_denied">Permission Request Denied.Please allow location to access the weather</string>
+    <string name="menu_item_refresh">refresh</string>
+    <string name="add_city">Add City</string>
+    <string name="location_permission_not_granted">LOCATION PERMISSION NOT GRANTED</string>
+</resources>

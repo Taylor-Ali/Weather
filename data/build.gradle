@@ -1,0 +1,61 @@
+plugins {
+    id 'kotlin-kapt'
+    id "com.android.library"
+    id 'org.jetbrains.kotlin.android'
+    id 'com.google.dagger.hilt.android'
+}
+
+android {
+    namespace 'com.leaf.data'
+    compileSdk 34
+
+    defaultConfig {
+        minSdk 24
+
+        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+        consumerProguardFiles "consumer-rules.pro"
+    }
+
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+        }
+    }
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
+    kotlinOptions {
+        jvmTarget = '1.8'
+    }
+}
+
+dependencies {
+    implementation project(path: ':utils')
+    //Dagger Hilt
+    implementation 'com.google.dagger:hilt-android:2.49'
+    kapt 'com.google.dagger:hilt-compiler:2.49'
+
+    //Retrofit
+    implementation "com.squareup.retrofit2:retrofit:${versions.libraries.retrofit}"
+    implementation "com.squareup.retrofit2:converter-gson:${versions.libraries.retrofit}"
+    //OKHttp
+    implementation "com.squareup.okhttp3:okhttp:${versions.libraries.okhttp}"
+    implementation "com.squareup.okhttp3:logging-interceptor:${versions.libraries.okHttpInterceptor}"
+
+    //Corutines
+    implementation "org.jetbrains.kotlinx:kotlinx-coroutines-core:${versions.libraries.coroutines}"
+    implementation "org.jetbrains.kotlinx:kotlinx-coroutines-android:${versions.libraries.coroutines}"
+
+    //Logging
+    implementation "com.jakewharton.timber:timber:${versions.libraries.timber}"
+
+
+    //Testing
+    testImplementation "junit:junit:${versions.libraries.junit}"
+    testImplementation "org.mockito:mockito-inline:${versions.libraries.mockito}"
+    testImplementation "org.jetbrains.kotlinx:kotlinx-coroutines-test:${versions.libraries.coroutines}"
+    androidTestImplementation "androidx.test.ext:junit:${versions.libraries.extJunit}"
+    androidTestImplementation "androidx.test.espresso:espresso-core:${versions.libraries.espresso}"
+}
